@@ -23,9 +23,13 @@ const createElementBuilder =
     createElement(tag, ...props) as HTMLElementTagNameMap[T];
 
 export const createCustomElementBuilder =
-  (tag: CustomHtmlTag) =>
+  <Extra extends Record<string, unknown> = Record<string, unknown>>(
+    tag: CustomHtmlTag
+  ) =>
   (
-    ...props: [CustomElementAttributes, ...HtmlChild[]] | [...HtmlChild[]]
+    ...props:
+      | [CustomElementAttributes<Extra>, ...HtmlChild[]]
+      | [...HtmlChild[]]
   ): HTMLElement =>
     createCustomElement(tag, ...props);
 
