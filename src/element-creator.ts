@@ -1,4 +1,8 @@
-import type { ElementAttributes, HtmlTag } from "./html-types";
+import type {
+  CustomElementAttributes,
+  ElementAttributes,
+  HtmlTag,
+} from "./html-types";
 
 const explicitBooleanAttributes = ["contenteditable", "draggable"];
 
@@ -89,6 +93,13 @@ export const createElement = <T extends HtmlTag>(
 
   return createElementInt(tag, attrs, (props as Child[]).map(normaliseChild));
 };
+
+export const createCustomElement = (
+  tag: string,
+  ...props:
+    | [attrs: CustomElementAttributes, ...children: Child[]]
+    | [...children: Child[]]
+): HTMLElement => createElement(tag as "div", ...props);
 
 export const createElementFromHtmlString = (html: string): HTMLElement => {
   const parent = document.createElement("template");

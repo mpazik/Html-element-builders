@@ -1,10 +1,15 @@
-import type { HTMLElementsAttributes } from "./standard-html-types";
+import type {
+  HTMLAttributes,
+  HTMLElementsAttributes,
+} from "./standard-html-types";
 
 interface CustomAttributes {
   dataSet?: DOMStringMap | undefined;
 }
 
+export type HtmlTag = keyof HTMLElementsAttributes;
 export type ElementAttributes<T extends HtmlTag> = HTMLElementsAttributes[T] &
   CustomAttributes;
 
-export type HtmlTag = keyof HTMLElementsAttributes;
+export type CustomHtmlTag = string;
+export type CustomElementAttributes = HTMLAttributes & CustomAttributes;

@@ -1,3 +1,5 @@
+import { createCustomElement } from "./element-creator";
+
 import { createElement, createElementFromHtmlString } from "./index";
 
 const check = (input: Element, result: string) => () =>
@@ -101,6 +103,20 @@ describe("createElement should build", () => {
     check(
       createElement("div", { dataSet: { id: "test", name: "something" } }),
       '<div data-id="test" data-name="something"></div>'
+    )
+  );
+  test(
+    "custom element",
+    check(
+      createCustomElement("custom-element"),
+      "<custom-element></custom-element>"
+    )
+  );
+  test(
+    "custom element extending base element",
+    check(
+      createElement("span", { is: "custom-element" }),
+      `<span is="custom-element"></span>`
     )
   );
 

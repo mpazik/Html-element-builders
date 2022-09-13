@@ -172,7 +172,7 @@ interface LinkStyle {
 }
 
 /** Any HTML element. Some elements directly implement this interface, while others implement it via an interface that inherits it. */
-interface HTMLAttributes
+export interface HTMLAttributes
   extends ElementAttributes,
     HTMLOrSVGElementAttributes,
     ElementContentEditableAttributes,
