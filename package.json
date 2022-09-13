@@ -1,0 +1,46 @@
+{
+  "name": "html-element-builders",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "Simple helper library to build `HtmlElements` for engineers that know what they are doing.",
+  "keywords": [
+    "no-framework",
+    "frontend",
+    "html"
+  ],
+  "author": "Marek Pazik <contact@marekpazik.pl>",
+  "license": "mit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpazik/html-element-builders.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mpazik/html-element-builders/issues"
+  },
+  "homepage": "https://github.com/mpazik/html-element-builders#readme",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "build": "tdl-build",
+    "prepack": "yarn build",
+    "lint": "tdl-lint",
+    "test": "tdl-test"
+  },
+  "devDependencies": {
+    "typescript-dev-loop": "^0.0.9"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": "./node_modules/typescript-dev-loop/config/eslint.json"
+  }
+}
