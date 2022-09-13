@@ -1,6 +1,11 @@
-import { createCustomElement } from "./element-creator";
+import {
+  createCustomElement,
+  createElement,
+  createElementFromHtmlString,
+  dangerousHtml,
+} from "./element-creator";
 
-import { createElement, createElementFromHtmlString, div, span } from "./index";
+import { div, span } from "./index";
 
 const check = (input: Element, result: string) => () =>
   expect(input.outerHTML).toEqual(result);
@@ -120,4 +125,19 @@ describe("createElement should build", () => {
     (result as HTMLElement).click();
     expect(calls).toHaveLength(1);
   });
+});
+
+describe("dangerousHtml should", () => {
+  test(
+    "render in an element",
+    check(div(dangerousHtml("<p>test</p>")), "<div><p>test</p></div>")
+  );
+
+  test(
+    "render multiple elements in an element",
+    check(
+      div(dangerousHtml("<p>test</p><span>Hi</span>")),
+      "<div><p>test</p><span>Hi</span></div>"
+    )
+  );
 });

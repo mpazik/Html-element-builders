@@ -64,7 +64,15 @@ const createElementInt = <T extends HtmlTag>(
     }
   }
 
-  children.forEach((child) => node.appendChild(child));
+  children.forEach((child) => {
+    if (child.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+      while (child.hasChildNodes()) {
+        node.appendChild(child.firstChild!);
+      }
+      return;
+    }
+    node.appendChild(child);
+  });
 
   return node as HTMLElementTagNameMap[T];
 };
@@ -85,8 +93,11 @@ export const createElement = <T extends HtmlTag>(
   if (props.length === 0) {
     return createElementInt(tag, {}, []);
   }
+
   const attrs: ElementAttributes<T> =
-    typeof props[0] === "object" && !Array.isArray(props[0])
+    typeof props[0] === "object" &&
+    !Array.isArray(props[0]) &&
+    !(props[0] instanceof Node)
       ? (props.shift() as ElementAttributes<T>)
       : {};
 
@@ -104,10 +115,14 @@ export const createCustomElement = (
     | [...children: HtmlChild[]]
 ): HTMLElement => createElement(tag as "div", ...props);
 
-export const createElementFromHtmlString = (html: string): HTMLElement => {
+export const dangerousHtml = (html: string): DocumentFragment => {
   const parent = document.createElement("template");
   parent.innerHTML = html;
-  const children = parent.content.childNodes;
+  return parent.content;
+};
+
+export const createElementFromHtmlString = (html: string): HTMLElement => {
+  const children = dangerousHtml(html).childNodes;
   if (children.length !== 1) {
     throw new Error("Expected html with a single root element.");
   }
