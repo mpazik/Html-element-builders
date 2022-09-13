@@ -1,12 +1,11 @@
 import type {
+  HtmlChild,
   CustomElementAttributes,
   ElementAttributes,
   HtmlTag,
 } from "./html-types";
 
 const explicitBooleanAttributes = ["contenteditable", "draggable"];
-
-type Child = HTMLElement | string;
 
 const createElementInt = <T extends HtmlTag>(
   tag: T,
@@ -70,7 +69,7 @@ const createElementInt = <T extends HtmlTag>(
   return node as HTMLElementTagNameMap[T];
 };
 
-const normaliseChild = (child: Child): Node => {
+const normaliseChild = (child: HtmlChild): Node => {
   if (typeof child === "string") {
     return document.createTextNode(child);
   }
@@ -80,8 +79,8 @@ const normaliseChild = (child: Child): Node => {
 export const createElement = <T extends HtmlTag>(
   tag: T,
   ...props:
-    | [attrs: ElementAttributes<T>, ...children: Child[]]
-    | [...children: Child[]]
+    | [attrs: ElementAttributes<T>, ...children: HtmlChild[]]
+    | [...children: HtmlChild[]]
 ): HTMLElement => {
   if (props.length === 0) {
     return createElementInt(tag, {}, []);
@@ -91,14 +90,18 @@ export const createElement = <T extends HtmlTag>(
       ? (props.shift() as ElementAttributes<T>)
       : {};
 
-  return createElementInt(tag, attrs, (props as Child[]).map(normaliseChild));
+  return createElementInt(
+    tag,
+    attrs,
+    (props as HtmlChild[]).map(normaliseChild)
+  );
 };
 
 export const createCustomElement = (
   tag: string,
   ...props:
-    | [attrs: CustomElementAttributes, ...children: Child[]]
-    | [...children: Child[]]
+    | [attrs: CustomElementAttributes, ...children: HtmlChild[]]
+    | [...children: HtmlChild[]]
 ): HTMLElement => createElement(tag as "div", ...props);
 
 export const createElementFromHtmlString = (html: string): HTMLElement => {

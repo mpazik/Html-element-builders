@@ -1,6 +1,6 @@
 import { createCustomElement } from "./element-creator";
 
-import { createElement, createElementFromHtmlString } from "./index";
+import { createElement, createElementFromHtmlString, div, span } from "./index";
 
 const check = (input: Element, result: string) => () =>
   expect(input.outerHTML).toEqual(result);
@@ -66,10 +66,7 @@ describe("createElement should build", () => {
   );
   test(
     "element with children",
-    check(
-      createElement("div", "parent", createElement("div", "child")),
-      "<div>parent<div>child</div></div>"
-    )
+    check(div("parent", div("child")), "<div>parent<div>child</div></div>")
   );
   test(
     "style",
@@ -101,7 +98,7 @@ describe("createElement should build", () => {
   test(
     "element with custom data attributes",
     check(
-      createElement("div", { dataSet: { id: "test", name: "something" } }),
+      div({ dataSet: { id: "test", name: "something" } }),
       '<div data-id="test" data-name="something"></div>'
     )
   );
@@ -114,15 +111,12 @@ describe("createElement should build", () => {
   );
   test(
     "custom element extending base element",
-    check(
-      createElement("span", { is: "custom-element" }),
-      `<span is="custom-element"></span>`
-    )
+    check(span({ is: "custom-element" }), `<span is="custom-element"></span>`)
   );
 
   test("event handler", () => {
     const calls: string[] = [];
-    const result = createElement("div", { onClick: () => calls.push("click") });
+    const result = div({ onClick: () => calls.push("click") });
     (result as HTMLElement).click();
     expect(calls).toHaveLength(1);
   });

@@ -3,12 +3,13 @@ import type {
   CustomElementAttributes,
   CustomHtmlTag,
   ElementAttributes,
+  HtmlChild,
   HtmlTag,
 } from "./html-types";
 
 type TagProps<T extends HtmlTag = HtmlTag> =
-  | [ElementAttributes<T>, ...HTMLElement[]]
-  | [...HTMLElement[]];
+  | [ElementAttributes<T>, ...HtmlChild[]]
+  | [...HtmlChild[]];
 
 type HtmlElementBuilder<T extends HtmlTag> = (
   ...props: TagProps<T>
@@ -17,14 +18,14 @@ type HtmlElementBuilder<T extends HtmlTag> = (
 const createElementBuilder =
   <T extends HtmlTag>(tag: T): HtmlElementBuilder<T> =>
   (
-    ...props: [ElementAttributes<T>, ...HTMLElement[]] | [...HTMLElement[]]
+    ...props: [ElementAttributes<T>, ...HtmlChild[]] | [...HtmlChild[]]
   ): HTMLElementTagNameMap[T] =>
     createElement(tag, ...props) as HTMLElementTagNameMap[T];
 
 export const createCustomElementBuilder =
   (tag: CustomHtmlTag) =>
   (
-    ...props: [CustomElementAttributes, ...HTMLElement[]] | [...HTMLElement[]]
+    ...props: [CustomElementAttributes, ...HtmlChild[]] | [...HtmlChild[]]
   ): HTMLElement =>
     createCustomElement(tag, ...props);
 

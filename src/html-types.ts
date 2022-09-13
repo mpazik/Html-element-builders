@@ -13,3 +13,5 @@ export type ElementAttributes<T extends HtmlTag> = HTMLElementsAttributes[T] &
 
 export type CustomHtmlTag = string;
 export type CustomElementAttributes = HTMLAttributes & CustomAttributes;
+
+export type HtmlChild = HTMLElement | string;
