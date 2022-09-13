@@ -1,4 +1,4 @@
-import type { HTMLElementsAttributes } from "./html-types";
+import type { HTMLElementsAttributes } from "./standard-html-types";
 
 const explicitBooleanAttributes = ["contenteditable", "draggable"];
 

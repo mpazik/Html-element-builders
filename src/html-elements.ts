@@ -1,5 +1,5 @@
 import { createElement } from "./element-creator";
-import type { HTMLElementsAttributes } from "./html-types";
+import type { HTMLElementsAttributes } from "./standard-html-types";
 
 interface CustomAttributes {
   dataSet?: DOMStringMap | undefined;
