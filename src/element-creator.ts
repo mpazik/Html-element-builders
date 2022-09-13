@@ -1,10 +1,8 @@
-import type { HTMLElementsAttributes } from "./standard-html-types";
+import type { ElementAttributes, HtmlTag } from "./html-types";
 
 const explicitBooleanAttributes = ["contenteditable", "draggable"];
 
 type Child = HTMLElement | string;
-type ElementAttributes<T extends HtmlTag> = HTMLElementsAttributes[T];
-type HtmlTag = keyof HTMLElementsAttributes;
 
 const createElementInt = <T extends HtmlTag>(
   tag: T,

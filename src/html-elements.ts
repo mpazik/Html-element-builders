@@ -1,13 +1,5 @@
 import { createElement } from "./element-creator";
-import type { HTMLElementsAttributes } from "./standard-html-types";
-
-interface CustomAttributes {
-  dataSet?: DOMStringMap | undefined;
-}
-
-type ElementAttributes<T extends HtmlTag> = HTMLElementsAttributes[T] &
-  CustomAttributes;
-type HtmlTag = keyof HTMLElementsAttributes;
+import type { ElementAttributes, HtmlTag } from "./html-types";
 
 type TagProps<T extends HtmlTag = HtmlTag> =
   | [ElementAttributes<T>, ...HTMLElement[]]
