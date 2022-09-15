@@ -1,5 +1,5 @@
 import type {
-  HtmlChild,
+  HtmlNode,
   CustomElementAttributes,
   ElementAttributes,
   HtmlTag,
@@ -77,7 +77,7 @@ const createElementInt = <T extends HtmlTag>(
   return node as HTMLElementTagNameMap[T];
 };
 
-const normaliseChild = (child: HtmlChild): Node => {
+const normaliseChild = (child: HtmlNode): Node => {
   if (typeof child === "string") {
     return document.createTextNode(child);
   }
@@ -87,8 +87,8 @@ const normaliseChild = (child: HtmlChild): Node => {
 export const createElement = <T extends HtmlTag>(
   tag: T,
   ...props:
-    | [attrs: ElementAttributes<T>, ...children: HtmlChild[]]
-    | [...children: HtmlChild[]]
+    | [attrs: ElementAttributes<T>, ...children: HtmlNode[]]
+    | [...children: HtmlNode[]]
 ): HTMLElement => {
   if (props.length === 0) {
     return createElementInt(tag, {}, []);
@@ -104,15 +104,15 @@ export const createElement = <T extends HtmlTag>(
   return createElementInt(
     tag,
     attrs,
-    (props as HtmlChild[]).map(normaliseChild)
+    (props as HtmlNode[]).map(normaliseChild)
   );
 };
 
 export const createCustomElement = (
   tag: string,
   ...props:
-    | [attrs: CustomElementAttributes, ...children: HtmlChild[]]
-    | [...children: HtmlChild[]]
+    | [attrs: CustomElementAttributes, ...children: HtmlNode[]]
+    | [...children: HtmlNode[]]
 ): HTMLElement => createElement(tag as "div", ...props);
 
 export const dangerousHtml = (html: string): DocumentFragment => {
