@@ -77,7 +77,7 @@ const createElementInt = <T extends HtmlTag>(
   return node as HTMLElementTagNameMap[T];
 };
 
-const normaliseChild = (child: HtmlNode): Node => {
+const normaliseChild = (child: HtmlNode): Node | undefined => {
   if (typeof child === "string") {
     return document.createTextNode(child);
   }
@@ -104,7 +104,9 @@ export const createElement = <T extends HtmlTag>(
   return createElementInt(
     tag,
     attrs,
-    (props as HtmlNode[]).map(normaliseChild).filter((it) => it !== undefined)
+    (props as HtmlNode[])
+      .map(normaliseChild)
+      .filter((it) => it !== undefined) as Node[]
   );
 };
 
