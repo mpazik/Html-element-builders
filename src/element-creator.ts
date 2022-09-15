@@ -104,7 +104,7 @@ export const createElement = <T extends HtmlTag>(
   return createElementInt(
     tag,
     attrs,
-    (props as HtmlNode[]).map(normaliseChild)
+    (props as HtmlNode[]).map(normaliseChild).filter((it) => it !== undefined)
   );
 };
 

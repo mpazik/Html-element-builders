@@ -118,6 +118,13 @@ describe("createElement should build", () => {
     "custom element extending base element",
     check(span({ is: "custom-element" }), `<span is="custom-element"></span>`)
   );
+  test(
+    "ignore undefined nodes",
+    check(
+      div({ class: undefined }, undefined, "text", undefined),
+      "<div>text</div>"
+    )
+  );
 
   test("event handler", () => {
     const calls: string[] = [];
