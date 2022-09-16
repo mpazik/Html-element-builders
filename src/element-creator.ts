@@ -7,10 +7,25 @@ import type {
 
 const explicitBooleanAttributes = ["contenteditable", "draggable"];
 
+export const appendHtmlNode = (parent: HTMLElement, ...child: HtmlNode[]) => {
+  const children = child.flatMap((child: HtmlNode): Node | Node[] => {
+    if (child === undefined) return [];
+    if (typeof child === "string") {
+      return document.createTextNode(child);
+    }
+    if (child.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+      return Array.from(child.childNodes);
+    }
+    return child;
+  });
+
+  parent.append(...children);
+};
+
 const createElementInt = <T extends HtmlTag>(
   tag: T,
   attrs: ElementAttributes<T>,
-  children: Node[]
+  children: HtmlNode[]
 ): HTMLElementTagNameMap[T] => {
   const is = attrs["is"] as string;
   const node = document.createElement(tag, is ? { is } : undefined);
@@ -64,24 +79,9 @@ const createElementInt = <T extends HtmlTag>(
     }
   }
 
-  children.forEach((child) => {
-    if (child.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-      while (child.hasChildNodes()) {
-        node.appendChild(child.firstChild!);
-      }
-      return;
-    }
-    node.appendChild(child);
-  });
+  appendHtmlNode(node, ...children);
 
   return node as HTMLElementTagNameMap[T];
-};
-
-const normaliseChild = (child: HtmlNode): Node | undefined => {
-  if (typeof child === "string") {
-    return document.createTextNode(child);
-  }
-  return child;
 };
 
 export const createElement = <T extends HtmlTag>(
@@ -101,13 +101,7 @@ export const createElement = <T extends HtmlTag>(
       ? (props.shift() as ElementAttributes<T>)
       : {};
 
-  return createElementInt(
-    tag,
-    attrs,
-    (props as HtmlNode[])
-      .map(normaliseChild)
-      .filter((it) => it !== undefined) as Node[]
-  );
+  return createElementInt(tag, attrs, props as HtmlNode[]);
 };
 
 export const createCustomElement = (
