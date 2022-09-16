@@ -1,5 +1,5 @@
 {
-  "name": "html-element-builders",
+  "name": "html-builders",
   "type": "module",
   "version": "0.0.5",
   "description": "Simple helper library to build `HtmlElements` for engineers that know what they are doing.",
@@ -12,12 +12,12 @@
   "license": "mit",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mpazik/html-element-builders.git"
+    "url": "git+https://github.com/mpazik/html-builders.git"
   },
   "bugs": {
-    "url": "https://github.com/mpazik/html-element-builders/issues"
+    "url": "https://github.com/mpazik/html-builders/issues"
   },
-  "homepage": "https://github.com/mpazik/html-element-builders#readme",
+  "homepage": "https://github.com/mpazik/html-builders#readme",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {

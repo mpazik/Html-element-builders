@@ -1,4 +1,4 @@
-# Html element builders
+# Html builders
 Simple helper library to build `HtmlElements` for engineers that know what they are doing.
 
 It constructs html elements using simplified API with a dedicated functions for elements.
