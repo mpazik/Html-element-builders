@@ -125,6 +125,13 @@ describe("createElement should build", () => {
       "<div>text</div>"
     )
   );
+  test(
+    "render array of items",
+    check(
+      div([undefined, "text", undefined, div("child")], "last"),
+      "<div>text<div>child</div>last</div>"
+    )
+  );
 
   test("event handler", () => {
     const calls: string[] = [];

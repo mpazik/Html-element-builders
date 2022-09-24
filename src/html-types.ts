@@ -16,4 +16,9 @@ export type CustomElementAttributes<
   Extra extends Record<string, unknown> = Record<string, unknown>
 > = Partial<Extra> & HTMLAttributes & CustomAttributes;
 
-export type HtmlNode = HTMLElement | DocumentFragment | string | undefined;
+export type HtmlNode =
+  | HTMLElement
+  | DocumentFragment
+  | string
+  | undefined
+  | (HTMLElement | string | undefined)[];

@@ -1,17 +1,26 @@
 import type {
-  HtmlNode,
   CustomElementAttributes,
   ElementAttributes,
+  HtmlNode,
   HtmlTag,
 } from "./html-types";
 
 const explicitBooleanAttributes = ["contenteditable", "draggable"];
 
-export const appendHtmlNode = (parent: HTMLElement, ...child: HtmlNode[]) => {
-  const children = child.flatMap((child: HtmlNode): Node | Node[] => {
+const normaliseChildren = (child: HtmlNode[]): Node[] =>
+  child.flatMap((child: HtmlNode): Node | Node[] => {
     if (child === undefined) return [];
     if (typeof child === "string") {
       return document.createTextNode(child);
+    }
+    if (Array.isArray(child)) {
+      return child.flatMap((child): Node | Node[] => {
+        if (child === undefined) return [];
+        if (typeof child === "string") {
+          return document.createTextNode(child);
+        }
+        return child;
+      });
     }
     if (child.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
       return Array.from(child.childNodes);
@@ -19,8 +28,14 @@ export const appendHtmlNode = (parent: HTMLElement, ...child: HtmlNode[]) => {
     return child;
   });
 
-  parent.append(...children);
+export const appendHtmlNode = (parent: HTMLElement, ...child: HtmlNode[]) => {
+  parent.append(...normaliseChildren(child));
 };
+
+export const replaceWithHtmlNode = (
+  parent: HTMLElement,
+  ...child: HtmlNode[]
+) => parent.replaceWith(...normaliseChildren(child));
 
 const createElementInt = <T extends HtmlTag>(
   tag: T,
