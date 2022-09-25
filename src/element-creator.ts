@@ -32,10 +32,14 @@ export const appendHtmlNode = (parent: HTMLElement, ...child: HtmlNode[]) => {
   parent.append(...normaliseChildren(child));
 };
 
-export const replaceWithHtmlNode = (
-  parent: HTMLElement,
-  ...child: HtmlNode[]
-) => parent.replaceWith(...normaliseChildren(child));
+export const renderHtmlNode = (parent: HTMLElement, ...child: HtmlNode[]) =>
+  parent.replaceChildren(...normaliseChildren(child));
+
+export type Renderer = (child: HtmlNode) => void;
+export const createRenderer =
+  (parent: HTMLElement): Renderer =>
+  (...child: HtmlNode[]) =>
+    renderHtmlNode(parent, ...child);
 
 const createElementInt = <T extends HtmlTag>(
   tag: T,

@@ -4,7 +4,8 @@ export {
   createElementFromHtmlString,
   dangerousHtml,
   appendHtmlNode,
-  replaceWithHtmlNode,
+  renderHtmlNode,
+  createRenderer,
 } from "./element-creator";
 
 export * from "./html-builders";
