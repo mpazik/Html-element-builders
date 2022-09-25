@@ -70,7 +70,6 @@ export const details: HtmlElementBuilder<"details"> =
 export const dfn: HtmlElementBuilder<"dfn"> = createElementBuilder("dfn");
 export const dialog: HtmlElementBuilder<"dialog"> =
   createElementBuilder("dialog");
-export const dir: HtmlElementBuilder<"dir"> = createElementBuilder("dir");
 export const div: HtmlElementBuilder<"div"> = createElementBuilder("div");
 export const dl: HtmlElementBuilder<"dl"> = createElementBuilder("dl");
 export const dt: HtmlElementBuilder<"dt"> = createElementBuilder("dt");
@@ -82,7 +81,6 @@ export const figcaption: HtmlElementBuilder<"figcaption"> =
   createElementBuilder("figcaption");
 export const figure: HtmlElementBuilder<"figure"> =
   createElementBuilder("figure");
-export const font: HtmlElementBuilder<"font"> = createElementBuilder("font");
 export const footer: HtmlElementBuilder<"footer"> =
   createElementBuilder("footer");
 export const form: HtmlElementBuilder<"form"> = createElementBuilder("form");
@@ -128,7 +126,6 @@ export const option: HtmlElementBuilder<"option"> =
 export const output: HtmlElementBuilder<"output"> =
   createElementBuilder("output");
 export const p: HtmlElementBuilder<"p"> = createElementBuilder("p");
-export const param: HtmlElementBuilder<"param"> = createElementBuilder("param");
 export const picture: HtmlElementBuilder<"picture"> =
   createElementBuilder("picture");
 export const pre: HtmlElementBuilder<"pre"> = createElementBuilder("pre");

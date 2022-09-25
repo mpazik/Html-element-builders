@@ -289,8 +289,6 @@ interface HTMLDialogAttributes extends HTMLAttributes {
   returnValue?: string | undefined;
 }
 
-type HTMLDirectoryAttributes = HTMLAttributes;
-
 type HTMLDivAttributes = HTMLAttributes;
 
 type HTMLDListAttributes = HTMLAttributes;
@@ -305,10 +303,6 @@ interface HTMLEmbedAttributes extends HTMLAttributes {
 interface HTMLFieldSetAttributes extends HTMLAttributes {
   disabled?: boolean | undefined;
   name?: string | undefined;
-}
-
-interface HTMLFontAttributes extends HTMLAttributes {
-  color?: string | undefined;
 }
 
 interface HTMLFormAttributes extends HTMLAttributes {
@@ -516,11 +510,6 @@ interface HTMLOutputAttributes extends HTMLAttributes {
 }
 
 type HTMLParagraphAttributes = HTMLAttributes;
-interface HTMLParamAttributes extends HTMLAttributes {
-  name?: string | undefined;
-  value?: string | undefined;
-}
-
 type HTMLPictureAttributes = HTMLAttributes;
 type HTMLPreAttributes = HTMLAttributes;
 
@@ -673,7 +662,6 @@ export interface HTMLElementsAttributes {
   details: HTMLDetailsAttributes;
   dfn: HTMLAttributes;
   dialog: HTMLDialogAttributes;
-  dir: HTMLDirectoryAttributes;
   div: HTMLDivAttributes;
   dl: HTMLDListAttributes;
   dt: HTMLAttributes;
@@ -682,7 +670,6 @@ export interface HTMLElementsAttributes {
   fieldset: HTMLFieldSetAttributes;
   figcaption: HTMLAttributes;
   figure: HTMLAttributes;
-  font: HTMLFontAttributes;
   footer: HTMLAttributes;
   form: HTMLFormAttributes;
   h1: HTMLHeadingAttributes;
@@ -718,7 +705,6 @@ export interface HTMLElementsAttributes {
   option: HTMLOptionAttributes;
   output: HTMLOutputAttributes;
   p: HTMLParagraphAttributes;
-  param: HTMLParamAttributes;
   picture: HTMLPictureAttributes;
   pre: HTMLPreAttributes;
   progress: HTMLProgressAttributes;
