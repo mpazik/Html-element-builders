@@ -1,7 +1,7 @@
 {
   "name": "html-builders",
   "type": "module",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Simple helper library to build `HtmlElements` for engineers that know what they are doing.",
   "keywords": [
     "no-framework",
