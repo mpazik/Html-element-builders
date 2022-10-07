@@ -41,43 +41,39 @@ export const createRenderer =
   (...child: HtmlNode[]) =>
     renderHtmlNode(parent, ...child);
 
-const createElementInt = <T extends HtmlTag>(
-  tag: T,
-  attrs: ElementAttributes<T>,
-  children: HtmlNode[]
-): HTMLElementTagNameMap[T] => {
-  const is = attrs["is"] as string;
-  const node = document.createElement(tag, is ? { is } : undefined);
-
+export const setAttributes = <T extends HtmlTag>(
+  element: HTMLElementTagNameMap[T],
+  attrs: ElementAttributes<T>
+) => {
   for (const attrKey of Object.keys(attrs)) {
     const attrVal = attrs[attrKey as keyof ElementAttributes<T>];
     if (attrVal === undefined || attrVal === null) {
       continue; // ignore undefined attributes
     }
     if (attrKey === "id") {
-      node.id = attrVal as unknown as string;
+      element.id = attrVal as unknown as string;
     } else if (attrKey === "class") {
       for (const cls of (attrVal as unknown as string).split(" ")) {
-        if (cls !== "") node.classList.add(cls);
+        if (cls !== "") element.classList.add(cls);
       }
     } else if (typeof attrVal === "function") {
       const type = attrKey.substr(2).toLowerCase();
       const listener = attrVal as unknown as (event: Event) => void;
-      node.addEventListener(type, (e: Event) => listener(e));
+      element.addEventListener(type, (e: Event) => listener(e));
     } else if (attrKey === "style") {
       const styles: CSSStyleDeclaration =
         attrVal as unknown as CSSStyleDeclaration;
       for (const styleKey of Object.keys(styles)) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        node.style[styleKey] = styles[styleKey as keyof CSSStyleDeclaration];
+        element.style[styleKey] = styles[styleKey as keyof CSSStyleDeclaration];
       }
     } else if (attrKey === "dataSet") {
       const data: DOMStringMap = attrVal as unknown as DOMStringMap;
       for (const key of Object.keys(data)) {
         const value = data[key];
         if (value !== undefined) {
-          node.setAttribute("data-" + key, value);
+          element.setAttribute("data-" + key, value);
         }
       }
     } else {
@@ -85,22 +81,32 @@ const createElementInt = <T extends HtmlTag>(
       if (typeof attrVal === "boolean") {
         if (attrVal) {
           if (explicitBooleanAttributes.includes(attrKey)) {
-            node.setAttribute(attrKey, "true");
+            element.setAttribute(attrKey, "true");
           } else {
-            node.setAttribute(attrKey, "");
+            element.setAttribute(attrKey, "");
           }
         } else {
-          node.removeAttribute(attrKey);
+          element.removeAttribute(attrKey);
         }
       } else {
-        node.setAttribute(attrKey, attrVal as unknown as string);
+        element.setAttribute(attrKey, attrVal as unknown as string);
       }
     }
   }
+};
 
-  appendHtmlNode(node, ...children);
+const createElementInt = <T extends HtmlTag>(
+  tag: T,
+  attrs: ElementAttributes<T>,
+  children: HtmlNode[]
+): HTMLElementTagNameMap[T] => {
+  const is = attrs["is"] as string;
+  const element = document.createElement(tag, is ? { is } : undefined);
 
-  return node as HTMLElementTagNameMap[T];
+  setAttributes(element, attrs);
+  appendHtmlNode(element, ...children);
+
+  return element as HTMLElementTagNameMap[T];
 };
 
 export const createElement = <T extends HtmlTag>(

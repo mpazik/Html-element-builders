@@ -3,6 +3,7 @@ import {
   createElement,
   createElementFromHtmlString,
   dangerousHtml,
+  setAttributes,
 } from "./element-creator";
 
 import { div, span } from "./index";
@@ -154,4 +155,38 @@ describe("dangerousHtml should", () => {
       "<div><p>test</p><span>Hi</span></div>"
     )
   );
+});
+
+describe("setAttributes should", () => {
+  test("add attributes", () => {
+    const element = div("text");
+    setAttributes(element, { id: "test", class: "my-class" });
+    expect(element.outerHTML).toEqual(
+      `<div id="test" class="my-class">text</div>`
+    );
+  });
+
+  test("merge classes", () => {
+    const element = div({ class: "first second" }, "text");
+    setAttributes(element, { class: "third" });
+    expect(element.outerHTML).toEqual(
+      `<div class="first second third">text</div>`
+    );
+  });
+
+  test("merge styles", () => {
+    const element = div({ style: { margin: "4px", border: "solid" } }, "text");
+    setAttributes(element, { style: { margin: "10px", padding: "4px" } });
+    expect(element.outerHTML).toEqual(
+      `<div style="margin: 10px; border: solid; padding: 4px;">text</div>`
+    );
+  });
+
+  test("merge data attributes", () => {
+    const element = div({ dataSet: { numer: "5", text: "something" } }, "text");
+    setAttributes(element, { dataSet: { numer: "1", other: "else" } });
+    expect(element.outerHTML).toEqual(
+      `<div data-numer="1" data-text="something" data-other="else">text</div>`
+    );
+  });
 });
