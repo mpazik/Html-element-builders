@@ -95,6 +95,14 @@ export const setAttributes = <T extends HtmlTag>(
   }
 };
 
+export const withAttributes = <T extends HtmlTag>(
+  element: HTMLElementTagNameMap[T],
+  attrs: ElementAttributes<T>
+): HTMLElementTagNameMap[T] => {
+  setAttributes(element, attrs);
+  return element;
+};
+
 const createElementInt = <T extends HtmlTag>(
   tag: T,
   attrs: ElementAttributes<T>,

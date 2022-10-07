@@ -7,6 +7,7 @@ export {
   renderHtmlNode,
   createRenderer,
   setAttributes,
+  withAttributes,
 } from "./element-creator";
 
 export * from "./html-builders";
