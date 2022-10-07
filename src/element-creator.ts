@@ -95,10 +95,13 @@ export const setAttributes = <T extends HtmlTag>(
   }
 };
 
-export const withAttributes = <T extends HtmlTag>(
-  element: HTMLElementTagNameMap[T],
+export const withAttributes = <
+  T extends HtmlTag,
+  E extends HTMLElementTagNameMap[T]
+>(
+  element: E,
   attrs: ElementAttributes<T>
-): HTMLElementTagNameMap[T] => {
+): E => {
   setAttributes(element, attrs);
   return element;
 };

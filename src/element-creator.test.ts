@@ -6,7 +6,7 @@ import {
   withAttributes,
 } from "./element-creator";
 
-import { div, span } from "./index";
+import { div, input, span } from "./index";
 
 const check = (input: Element, result: string) =>
   expect(input.outerHTML).toEqual(result);
@@ -146,4 +146,12 @@ describe("withAttributes should", () => {
       ),
       `<div data-numer="1" data-text="something" data-other="else">text</div>`
     ));
+
+  test("handle provided type", () => {
+    const element = withAttributes(input({ value: "Test" }, "text"), {
+      value: "test",
+    });
+    element.value = "New value";
+    return check(element, `<input value="test">`);
+  });
 });
