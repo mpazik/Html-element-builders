@@ -61,12 +61,17 @@ export const setAttributes = <T extends HtmlTag>(
       const listener = attrVal as unknown as (event: Event) => void;
       element.addEventListener(type, (e: Event) => listener(e));
     } else if (attrKey === "style") {
-      const styles: CSSStyleDeclaration =
-        attrVal as unknown as CSSStyleDeclaration;
-      for (const styleKey of Object.keys(styles)) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        element.style[styleKey] = styles[styleKey as keyof CSSStyleDeclaration];
+      // noinspection SuspiciousTypeOfGuard
+      if (typeof attrVal === "string") {
+        element.style.cssText = attrVal;
+      } else {
+        const styles: Partial<CSSStyleDeclaration> = attrVal;
+        for (const styleKey of Object.keys(styles)) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          element.style[styleKey] =
+            styles[styleKey as keyof CSSStyleDeclaration];
+        }
       }
     } else if (attrKey === "dataSet") {
       const data: DOMStringMap = attrVal as unknown as DOMStringMap;

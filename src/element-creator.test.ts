@@ -59,6 +59,11 @@ describe("createElement should build", () => {
       createElement("div", { style: { width: "100px", left: "50px" } }),
       '<div style="width: 100px; left: 50px;"></div>'
     ));
+  test("style as text", () =>
+    check(
+      createElement("div", { style: "width: 100px; left: 50px" }),
+      '<div style="width: 100px; left: 50px;"></div>'
+    ));
   test("element with boolean attribute", () =>
     // in real dom it would become <div hidden></div>
     check(createElement("div", { hidden: true }), '<div hidden=""></div>'));

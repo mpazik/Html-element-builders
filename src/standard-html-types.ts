@@ -164,7 +164,7 @@ interface ElementContentEditableAttributes {
 }
 
 interface ElementCSSInlineStyle {
-  style?: Partial<CSSStyleDeclaration> | undefined;
+  style?: Partial<CSSStyleDeclaration> | string | undefined;
 }
 
 interface LinkStyle {
