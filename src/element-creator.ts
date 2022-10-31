@@ -41,6 +41,12 @@ export const createRenderer =
   (...child: HtmlNode[]) =>
     renderHtmlNode(parent, ...child);
 
+const addClasses = (element: Element, classes: string) => {
+  for (const cls of classes.split(" ")) {
+    if (cls !== "") element.classList.add(cls);
+  }
+};
+
 export const setAttributes = <T extends HtmlTag>(
   element: HTMLElementTagNameMap[T],
   attrs: ElementAttributes<T>
@@ -53,8 +59,13 @@ export const setAttributes = <T extends HtmlTag>(
     if (attrKey === "id") {
       element.id = attrVal as unknown as string;
     } else if (attrKey === "class") {
-      for (const cls of (attrVal as unknown as string).split(" ")) {
-        if (cls !== "") element.classList.add(cls);
+      if (Array.isArray(attrVal)) {
+        for (const cls of attrVal) {
+          if (!cls) continue;
+          addClasses(element, cls);
+        }
+      } else {
+        addClasses(element, attrVal as unknown as string);
       }
     } else if (typeof attrVal === "function") {
       const type = attrKey.substr(2).toLowerCase();

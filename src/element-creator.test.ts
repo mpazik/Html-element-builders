@@ -52,6 +52,23 @@ describe("createElement should build", () => {
       createElement("div", { class: "my-class my-class" }),
       '<div class="my-class"></div>'
     ));
+  test("element with list of classes", () =>
+    check(
+      createElement("div", { class: ["my-class", "my-class2"] }),
+      '<div class="my-class my-class2"></div>'
+    ));
+  test("element with list of double classes", () =>
+    check(
+      createElement("div", {
+        class: ["my-class my-class2", "my-class my-class3"],
+      }),
+      '<div class="my-class my-class2 my-class3"></div>'
+    ));
+  test("element with some undefined classes", () =>
+    check(
+      createElement("div", { class: [undefined, "my-class", undefined] }),
+      '<div class="my-class"></div>'
+    ));
   test("element with children", () =>
     check(div("parent", div("child")), "<div>parent<div>child</div></div>"));
   test("style", () =>

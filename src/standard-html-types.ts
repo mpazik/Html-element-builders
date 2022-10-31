@@ -145,7 +145,7 @@ interface HtmlElementEventHandlers
  * Element attributes
  */
 interface ElementAttributes {
-  class?: string | undefined;
+  class?: string | (string | undefined)[] | undefined;
   id?: string | undefined;
   scrollLeft?: number | undefined;
   scrollTop?: number | undefined;
