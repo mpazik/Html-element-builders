@@ -95,14 +95,14 @@ export const setAttributes = <T extends HtmlTag>(
     } else {
       // noinspection SuspiciousTypeOfGuard
       if (typeof attrVal === "boolean") {
-        if (attrVal) {
-          if (explicitBooleanAttributes.includes(attrKey)) {
+        if (explicitBooleanAttributes.includes(attrKey)) {
+          if (attrVal) {
             element.setAttribute(attrKey, "true");
           } else {
-            element.setAttribute(attrKey, "");
+            element.removeAttribute(attrKey);
           }
         } else {
-          element.removeAttribute(attrKey);
+          element.toggleAttribute(attrKey, attrVal);
         }
       } else {
         element.setAttribute(attrKey, attrVal as unknown as string);
