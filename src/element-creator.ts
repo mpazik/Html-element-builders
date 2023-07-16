@@ -7,26 +7,32 @@ import type {
 
 const explicitBooleanAttributes = ["contenteditable", "draggable"];
 
-const normaliseChildren = (child: HtmlNode[]): Node[] =>
-  child.flatMap((child: HtmlNode): Node | Node[] => {
-    if (child === undefined) return [];
+const normaliseChildren = (children: HtmlNode[]): Node[] => {
+  const normalised: Node[] = [];
+  for (const child of children) {
+    if (child === undefined) continue;
     if (typeof child === "string") {
-      return document.createTextNode(child);
-    }
-    if (Array.isArray(child)) {
-      return child.flatMap((child): Node | Node[] => {
-        if (child === undefined) return [];
+      normalised.push(document.createTextNode(child));
+    } else if (Array.isArray(child)) {
+      child.forEach((child) => {
+        if (child === undefined) return;
         if (typeof child === "string") {
-          return document.createTextNode(child);
+          normalised.push(document.createTextNode(child));
+        } else {
+          normalised.push(child);
         }
-        return child;
       });
+    } else if (child.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+      const grandChildren = (child as DocumentFragment).children;
+      for (let i = 0; i < grandChildren.length; i++) {
+        normalised.push(grandChildren[i]);
+      }
+    } else {
+      normalised.push(child);
     }
-    if (child.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-      return Array.from(child.childNodes);
-    }
-    return child;
-  });
+  }
+  return normalised;
+};
 
 export const appendHtmlNode = (parent: HTMLElement, ...child: HtmlNode[]) => {
   parent.append(...normaliseChildren(child));
@@ -146,14 +152,17 @@ export const createElement = <T extends HtmlTag>(
     return createElementInt(tag, {}, []);
   }
 
-  const attrs: ElementAttributes<T> =
+  const hasArgs =
     typeof props[0] === "object" &&
     !Array.isArray(props[0]) &&
-    !(props[0] instanceof Node)
-      ? (props.shift() as ElementAttributes<T>)
-      : {};
+    !(props[0] instanceof Node);
 
-  return createElementInt(tag, attrs, props as HtmlNode[]);
+  const attrs: ElementAttributes<T> = hasArgs
+    ? (props[0] as ElementAttributes<T>)
+    : {};
+  const children = (hasArgs ? props.slice(1) : props) as HtmlNode[];
+
+  return createElementInt(tag, attrs, children);
 };
 
 export const createCustomElement = (
