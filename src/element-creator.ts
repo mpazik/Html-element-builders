@@ -23,7 +23,7 @@ const normaliseChildren = (children: HtmlNode[]): Node[] => {
         }
       });
     } else if (child.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-      const grandChildren = (child as DocumentFragment).children;
+      const grandChildren = (child as DocumentFragment).childNodes;
       for (let i = 0; i < grandChildren.length; i++) {
         normalised.push(grandChildren[i]);
       }
